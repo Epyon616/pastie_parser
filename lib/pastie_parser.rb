@@ -2,19 +2,18 @@ module PastieParser
   class Parse
     PASTIE_MATCHER = /^http:\/\/pastie.org/
     GIST_MATCHER = /^https:\/\/gist.github.com/
-
-    def self.pastie_parser(url)
-      return "<script src=\"#{url}.js\" type=\"text/javascript\" /></script>"
-    end
-
-    def self.gist_parser(url)
-      return "<script src=\"#{url}.js\" type=\"text/javascript\" /></script>"
-    end
-
-    def self.parse_all(url)
-      case
-      when url.match(PASTIE_MATCHER)
-        
+    def self.parse(text)
+      url = text.split
+      array = Array.new
+      url.each do |u|
+        if (u.match(PASTIE_MATCHER) || u.match(GIST_MATCHER))
+          array << u.gsub(u,"<script src=\"#{u}.js\" type=\"text/javascript\"></script>")
+        else
+          array << u
+        end
+      end
+      parsed_text = array.join(" ")
+      return parsed_text
     end
   end
 end
