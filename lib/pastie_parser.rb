@@ -6,6 +6,7 @@ module PastieParser
     def self.parse(text)
       url = text.split
       array = Array.new
+      
       url.each do |u|
         case
         when u.match(PASTIE_MATCHER)
@@ -16,6 +17,7 @@ module PastieParser
           array << u
         end
       end
+      
       parsed_text = array.join(" ")
       return parsed_text
     end
